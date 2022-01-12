@@ -7,8 +7,6 @@ torchvision==0.10.0
 mmdet==2.20.0
 mmcv-full==1.4.0
 mmpycocotools==12.0.3
-numpy==1.20.0
-Cython==0.29.21
 matplotlib
 six
 terminaltables

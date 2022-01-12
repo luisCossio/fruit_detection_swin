@@ -17,15 +17,22 @@ RUN pip install mmcv-full==latest+torch1.8.0+cu111 -f https://openmmlab.oss-acce
 
 # Install MMDetection
 RUN conda clean --all
-RUN git clone https://github.com/open-mmlab/mmdetection.git /mmdetection
-WORKDIR /mmdetection
+
+RUN git clone https://github.com/SwinTransformer/Swin-Transformer-Object-Detection.git /swin_detection
+
+#
+
+# # Install specific code
+RUN cd .. && git clone https://github.com/luisCossio/fruit_detection_swin.git && mkdir -p fruit_detection_swin/weights \
+
+
 ENV FORCE_CUDA="1"
-RUN pip install -r requirements/build.txt
-RUN pip install --no-cache-dir -e .
+# RUN pip install -r requirements/build.txt
+# RUN pip install --no-cache-dir -e .
+#
 
-# Install specific code
-RUN cd .. && git clone https://github.com/NVIDIA/apex \
-    && git clone https://github.com/luisCossio/fruit_detection_swin.git && mkdir -p fruit_detection_swin/weights
+WORKDIR /swin_detection
+RUN git clone https://github.com/NVIDIA/apex && cd apex \
+    && pip install -v --disable-pip-version-check --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
 
-
-
+RUN python setup.py develop
