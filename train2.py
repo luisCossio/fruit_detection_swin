@@ -99,13 +99,13 @@ class Namespace:
 def main_model():
     # args = parse_args()
     args = Namespace \
-        (cfg_options={'model.pretrained': '/home/luis/2021/Swin_Detection/weights/swin_small_patch4_window7_224.pth',
+        (cfg_options={'model.pretrained': 'weights/swin_small_patch4_window7_224.pth',
     # args = Namespace(cfg_options={'model.pretrained': '/home/luis/2021/Swin_Detection/weights/cascade_mask_rcnn_swin_small_patch4_window7.pth',
                                   # '[model.backbone.use_checkpoint': 'True]'\
                                   },
                      # config='configs/swin/cascade_mask_rcnn_swin_small_patch4_window7_mstrain_480-800_giou_4conv1f_adamw_3x_coco.py',
-                     config='configs/swin/htc_swin2.py',
-                     deterministic=False, gpu_ids=[0], gpus=None, launcher='pytorch', local_rank=0, no_validate=False,
+                     config='configs/swin/htc_swin.py',
+                     deterministic=False, gpu_ids=[0], gpus=None, launcher='none', local_rank=0, no_validate=False,
                      options=None, resume_from=None, seed=None, work_dir='work_dirs')
 
     cfg = Config.fromfile(args.config)
@@ -282,7 +282,7 @@ def main_dataset():
 def main_train():
     # args = parse_args()
     args = Namespace \
-        (cfg_options={'model.pretrained': '/home/luis/2021/Swin_Detection/weights/swin_small_patch4_window7_224.pth',
+        (cfg_options={'model.pretrained': 'weights/swin_small_patch4_window7_224.pth',
     # args = Namespace(cfg_options={'model.pretrained': '/home/luis/2021/Swin_Detection/weights/cascade_mask_rcnn_swin_small_patch4_window7.pth',
                                   # '[model.backbone.use_checkpoint': 'True]'\
                                   },

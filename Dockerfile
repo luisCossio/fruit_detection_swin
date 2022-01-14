@@ -13,26 +13,29 @@ RUN apt-get update && apt-get install -y ffmpeg libsm6 libxext6 git ninja-build 
     && rm -rf /var/lib/apt/lists/*
 
 # Install MMCV
-RUN pip install mmcv-full==latest+torch1.8.0+cu111 -f https://openmmlab.oss-accelerate.aliyuncs.com/mmcv/dist/index.html
+RUN pip install mmcv-full==1.3.5+torch1.8.0+cu111 -f https://openmmlab.oss-accelerate.aliyuncs.com/mmcv/dist/index.html \
+    pip install pip install mmdet==2.18.0
+# RUN pip install mmcv-full==1.4.0 && pip install mmdet==2.20.0
 
 # Install MMDetection
 RUN conda clean --all
 
 RUN git clone https://github.com/SwinTransformer/Swin-Transformer-Object-Detection.git /swin_detection
 
-#
-
 # # Install specific code
-RUN cd .. && git clone https://github.com/luisCossio/fruit_detection_swin.git && mkdir -p fruit_detection_swin/weights \
+RUN git clone https://github.com/luisCossio/fruit_detection_swin.git /fruit_detection_swin
 
 
 ENV FORCE_CUDA="1"
 # RUN pip install -r requirements/build.txt
 # RUN pip install --no-cache-dir -e .
-#
 
 WORKDIR /swin_detection
 RUN git clone https://github.com/NVIDIA/apex && cd apex \
     && pip install -v --disable-pip-version-check --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
 
 RUN python setup.py develop
+
+RUN mv /fruit_detection_swin/train2.py /swin_detection/tools/train2.py \
+    && mv /fruit_detection_swin/minneapple_instance.py /swin_detection/configs/_base_/datasets/ \
+    && mv /fruit_detection_swin/htc_swin.py /swin_detection/configs/swin/htc_swin.py
