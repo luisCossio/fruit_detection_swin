@@ -6,6 +6,7 @@ torch==1.10.1+cu113 torchvision==0.11.2+cu113 -f https://download.pytorch.org/wh
 mmdet==2.20.0
 mmcv-full==1.4.0
 mmpycocotools==12.0.3
+pycocotools
 matplotlib
 six
 terminaltables
