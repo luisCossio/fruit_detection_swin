@@ -1,7 +1,5 @@
 torch==1.9.0
 torchvision==0.10.1
-mmdet==2.11.0
-mmcv-full==1.4.0  -f https://download.openmmlab.com/mmcv/dist/cu102/torch1.9.0/index.html
 mmpycocotools==12.0.3
 pycocotools
 matplotlib
