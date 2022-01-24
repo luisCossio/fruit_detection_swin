@@ -375,6 +375,8 @@ def main_train():
 
     datasets = [build_dataset(cfg.data.train)]
 
+    print("NUMBER clases : ",datasets[0].CLASSES)
+    print("Model num classes: ",model.num_classes)
     if len(cfg.workflow) == 2:
         val_dataset = copy.deepcopy(cfg.data.val)
         val_dataset.pipeline = cfg.data.train.pipeline
@@ -389,14 +391,14 @@ def main_train():
     model.CLASSES = datasets[0].CLASSES
     print("Number of datasets = {:d}".format(len(datasets)))
 
-    train_detector(
-        model,
-        datasets,
-        cfg,
-        distributed=distributed,
-        validate=(not args.no_validate),
-        timestamp=timestamp,
-        meta=meta)
+    # train_detector(
+    #     model,
+    #     datasets,
+    #     cfg,
+    #     distributed=distributed,
+    #     validate=(not args.no_validate),
+    #     timestamp=timestamp,
+    #     meta=meta)
 
 
 

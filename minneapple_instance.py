@@ -1,5 +1,6 @@
 dataset_type = 'CocoDataset'
-data_root = '../datasets/minneapple/'
+data_root = '../../datasets/minneapple/'
+classes = ['apple']
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
 train_pipeline = [
@@ -32,16 +33,19 @@ data = dict(
     workers_per_gpu=1,
     train=dict(
         type=dataset_type,
+        classes=classes,
         ann_file=data_root + 'annotations/instances_train.json',
         img_prefix=data_root + 'train/images/',
         pipeline=train_pipeline),
     val=dict(
         type=dataset_type,
+        classes=classes,
         ann_file=data_root + 'annotations/instances_val.json',
         img_prefix=data_root + 'val/images/',
         pipeline=test_pipeline),
     test=dict(
         type=dataset_type,
+        classes=classes,
         ann_file=data_root + 'annotations/instances_val.json',
         img_prefix=data_root + 'val/images/',
         pipeline=test_pipeline))

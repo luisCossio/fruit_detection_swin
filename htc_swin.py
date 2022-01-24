@@ -9,7 +9,7 @@ _base_ = [
 
 model = dict(
     backbone=dict(
-        embed_dims=96,
+        embed_dim=96,
         depths=[2, 2, 18, 2],
         num_heads=[3, 6, 12, 24],
         window_size=7,
