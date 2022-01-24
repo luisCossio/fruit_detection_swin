@@ -35,12 +35,12 @@ ENV FORCE_CUDA="1"
 RUN pip install -r requirements/build.txt
 RUN pip install --no-cache-dir -e .
 
-RUN python setup.py develop
-
 RUN git clone https://github.com/NVIDIA/apex \
-   && cd apex \
+   && mv /fruit_detection_swin/utils.py /swin_detection/apex/apex/amp/utils.py  && cd apex \
    && pip install -v --disable-pip-version-check --no-cache-dir ./
 
 RUN mv /fruit_detection_swin/train2.py /swin_detection/tools/train2.py \
     && mv /fruit_detection_swin/minneapple_instance.py /swin_detection/configs/_base_/datasets/ \
     && mv /fruit_detection_swin/htc_swin.py /swin_detection/configs/swin/htc_swin.py
+
+RUN python setup.py develop
