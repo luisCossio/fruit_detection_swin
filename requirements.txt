@@ -1,5 +1,5 @@
 torch==1.9.0
-torchvision==0.10.1
+torchvision==0.10.0
 mmpycocotools==12.0.3
 pycocotools
 matplotlib
