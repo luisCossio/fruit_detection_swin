@@ -1,4 +1,4 @@
-dataset_type = 'CocoDataset'
+dataset_type = 'MinneAppleDataset'
 data_root = '../../datasets/minneapple/'
 classes = ['apple']
 img_norm_cfg = dict(
@@ -6,7 +6,7 @@ img_norm_cfg = dict(
 train_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(type='LoadAnnotations', with_bbox=True, with_mask=True),
-    dict(type='Resize', img_scale=(333, 200), keep_ratio=True),
+    # dict(type='Resize', img_scale=(333, 200), keep_ratio=True),
     dict(type='RandomFlip', flip_ratio=0.5),
     dict(type='Normalize', **img_norm_cfg),
     dict(type='Pad', size_divisor=32),
@@ -17,7 +17,7 @@ test_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(
         type='MultiScaleFlipAug',
-        img_scale=(333, 200),
+        img_scale=(1280, 720),
         flip=False,
         transforms=[
             dict(type='Resize', keep_ratio=True),
@@ -29,8 +29,8 @@ test_pipeline = [
         ])
 ]
 data = dict(
-    samples_per_gpu=1,
-    workers_per_gpu=1,
+    samples_per_gpu=2,
+    workers_per_gpu=2,
     train=dict(
         type=dataset_type,
         classes=classes,
@@ -49,4 +49,4 @@ data = dict(
         ann_file=data_root + 'annotations/instances_val.json',
         img_prefix=data_root + 'val/images/',
         pipeline=test_pipeline))
-evaluation = dict(metric=['bbox', 'segm'])
+evaluation = dict(metric=['bbox', 'segm'], save_best = 'bbox_mAP')

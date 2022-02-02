@@ -92,27 +92,24 @@ train_pipeline = [
          policies=[
              [
                  dict(type='Resize',
-                      img_scale=[(120, 333),(128, 333),(136, 333),(144, 333),(152, 333),(160, 333),(168, 333),
-                                 (176, 333),(184, 333),(192, 333),(200, 333)],
-                      multiscale_mode='value',
-                      keep_ratio=True)
-             ],
-             [
-                 dict(type='Resize',
-                      img_scale=[(100, 333),(125, 333),(150, 333)],
+                      img_scale=[(1152, 648), (1178, 662), (1203, 677), (1229, 691), (1254, 706),
+                                 (1280, 720), (1306, 734), (1331, 749), (1357, 763), (1382, 778), (1408, 792)],
                       multiscale_mode='value',
                       keep_ratio=True),
-                 dict(type='RandomCrop',
-                      crop_type='absolute_range',
-                      crop_size=(384, 600),
-                      allow_negative_crop=True),
-                 dict(type='Resize',
-                      img_scale=[(120, 333),(128, 333),(136, 333),(144, 333),(152, 333),(160, 333),(168, 333),
-                                 (176, 333),(184, 333),(192, 333),(200, 333)],
-                      multiscale_mode='value',
-                      override=True,
-                      keep_ratio=True)
-             ]
+                 dict(type='Translate',
+                      level=2,
+                      direction='horizontal',
+                      img_fill_val=114),
+
+                 dict(type='Rotate',
+                      level=1,
+                      img_fill_val=114)
+             ],
+             [
+                 dict(type='Translate',
+                      level=2,
+                      direction='vertical',
+                      img_fill_val=114),]
          ]),
     dict(type='Normalize', **img_norm_cfg),
     dict(type='Pad', size_divisor=32),
