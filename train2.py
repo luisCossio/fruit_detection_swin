@@ -104,7 +104,7 @@ def main_model():
                                   # '[model.backbone.use_checkpoint': 'True]'\
                                   },
                      # config='configs/swin/cascade_mask_rcnn_swin_small_patch4_window7_mstrain_480-800_giou_4conv1f_adamw_3x_coco.py',
-                     config='configs/swin/htc_swin2.py',
+                     config='configs/swin/cascade_mask_small.py',
                      deterministic=False, gpu_ids=[0], gpus=None, launcher='pytorch', local_rank=0, no_validate=False,
                      options=None, resume_from=None, seed=None, work_dir='work_dirs')
 
@@ -191,7 +191,7 @@ def main_dataset():
         (cfg_options={'model.pretrained': 'weights/swin_small_patch4_window7_224.pth',
                                   # '[model.backbone.use_checkpoint': 'True]'\
                                   },
-                     config='configs/swin/htc_swin.py',
+                     config='configs/swin/cascade_mask_small.py',
          # deterministic=False, gpu_ids=[0], gpus=None, launcher='pytorch', local_rank=0, no_validate=False ,nproc_per_node=1 ,master_port=29500,
          deterministic=False, gpu_ids=[0], gpus=None, launcher='none', local_rank=0, no_validate=False,
                      options=None, resume_from=None, seed=None, work_dir='work_dirs')
@@ -287,7 +287,7 @@ def main_train():
                                   # '[model.backbone.use_checkpoint': 'True]'\
                                   },
                      # config='configs/swin/cascade_mask_rcnn_swin_small_patch4_window7_mstrain_480-800_giou_4conv1f_adamw_3x_coco.py',
-                     config='configs/swin/htc_swin.py',
+                     config='configs/swin/cascade_mask_small.py',
                      deterministic=False, gpu_ids=[0], gpus=None, launcher='none', local_rank=0, no_validate=False,
                      # deterministic=False, gpu_ids=[0], gpus=None, launcher='pytorch', local_rank=0, no_validate=False ,nproc_per_node=1 ,master_port=29500,
                      options=None, resume_from=None, seed=None, work_dir='work_dirs')

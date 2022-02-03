@@ -1,6 +1,3 @@
-#  this is my design, and should be named: htc swin_small_patch4_window7_mstrain_480-800_adamw_dconv_c3-c5_mstrain_400_1400_16x1_20e_coco.py
-#### https://github.com/SwinTransformer/Swin-Transformer-Object-Detection/issues/2
-
 _base_ = [
     '../_base_/models/cascade_mask_rcnn_swin_fpn.py',
     '../_base_/datasets/minneapple_instance.py',
@@ -10,7 +7,7 @@ _base_ = [
 model = dict(
     backbone=dict(
         embed_dim=96,
-        depths=[2, 2, 18, 2],
+        depths=[2, 2, 6, 2],
         num_heads=[3, 6, 12, 24],
         window_size=7,
         ape=False,
@@ -92,7 +89,8 @@ train_pipeline = [
          policies=[
              [
                  dict(type='Resize',
-                      img_scale=[(1152, 648),(1178, 662),(1203, 677),(1229, 691),(1254, 706),(1280, 720)],
+                      img_scale=[(1152, 648), (1178, 662), (1203, 677), (1229, 691), (1254, 706),
+                                 (1280, 720)],
                       multiscale_mode='value',
                       keep_ratio=True),
                  dict(type='Translate',
@@ -108,7 +106,7 @@ train_pipeline = [
                  dict(type='Translate',
                       level=2,
                       direction='vertical',
-                      img_fill_val=114),]
+                      img_fill_val=114), ]
          ]),
     dict(type='Normalize', **img_norm_cfg),
     dict(type='Pad', size_divisor=32),
@@ -121,8 +119,8 @@ optimizer = dict(_delete_=True, type='AdamW', lr=0.0001, betas=(0.9, 0.999), wei
                  paramwise_cfg=dict(custom_keys={'absolute_pos_embed': dict(decay_mult=0.),
                                                  'relative_position_bias_table': dict(decay_mult=0.),
                                                  'norm': dict(decay_mult=0.)}))
-lr_config = dict(step=[27, 33])
-runner = dict(type='EpochBasedRunnerAmp', max_epochs=36)
+lr_config = dict(step=[27, 50])
+runner = dict(type='EpochBasedRunnerAmp', max_epochs=90)
 
 # do not use mmdet version fp16
 fp16 = None
