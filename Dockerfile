@@ -21,6 +21,8 @@ RUN git clone https://github.com/SwinTransformer/Swin-Transformer-Object-Detecti
 # # Install specific code
 RUN git clone https://github.com/luisCossio/fruit_detection_swin.git /fruit_detection_swin
 
+RUN pip install mmcv-full==1.4.0 -f https://download.openmmlab.com/mmcv/dist/cu102/torch1.9.0/index.html
+
 WORKDIR /swin_detection
 
 ENV FORCE_CUDA="1"
@@ -28,12 +30,12 @@ RUN pip install -r /fruit_detection_swin/requirements.txt
 RUN pip install --no-cache-dir -e .
 
 RUN git clone https://github.com/NVIDIA/apex \
-   && mv /fruit_detection_swin/utils.py /swin_detection/apex/apex/amp/utils.py  && cd apex \
    && pip install -v --disable-pip-version-check --no-cache-dir ./
 
 RUN mv /fruit_detection_swin/train2.py /swin_detection/tools/train2.py \
     && mv /fruit_detection_swin/minneapple_instance.py /swin_detection/configs/_base_/datasets/ \
     && mv /fruit_detection_swin/htc_swin.py /swin_detection/configs/swin/htc_swin.py \
     && mv /fruit_detection_swin/coco.py /swin_detection/mmdet/datasets/coco.py
+    && mv /fruit_detection_swin/cascade_mask_rcnn_swin_fpn.py /swin_detection/configs/_base_/models/cascade_mask_rcnn_swin_fpn.py
 
 RUN python setup.py develop

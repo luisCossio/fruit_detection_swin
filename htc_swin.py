@@ -92,8 +92,7 @@ train_pipeline = [
          policies=[
              [
                  dict(type='Resize',
-                      img_scale=[(1152, 648), (1178, 662), (1203, 677), (1229, 691), (1254, 706),
-                                 (1280, 720), (1306, 734), (1331, 749), (1357, 763), (1382, 778), (1408, 792)],
+                      img_scale=[(1152, 648),(1178, 662),(1203, 677),(1229, 691),(1254, 706),(1280, 720)],
                       multiscale_mode='value',
                       keep_ratio=True),
                  dict(type='Translate',
@@ -129,7 +128,7 @@ runner = dict(type='EpochBasedRunnerAmp', max_epochs=36)
 fp16 = None
 optimizer_config = dict(
     type="DistOptimizerHook",
-    update_interval=1,
+    update_interval=2,
     grad_clip=None,
     coalesce=True,
     bucket_size_mb=-1,
