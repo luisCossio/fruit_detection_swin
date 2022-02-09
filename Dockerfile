@@ -24,8 +24,8 @@ RUN git clone https://github.com/SwinTransformer/Swin-Transformer-Object-Detecti
 WORKDIR /swin_detection
 
 ENV FORCE_CUDA="1"
-RUN pip install -r /fruit_detection_swin/requirements.txt
-RUN pip install --no-cache-dir -e .
+RUN pip install -r /fruit_detection_swin/requirements.txt && pip uninstall mmpycocotools pycocotools \
+    && pip install mmpycocotools pycocotools && pip install --no-cache-dir -e .
 
 RUN git clone https://github.com/NVIDIA/apex \
     && cd apex \
@@ -33,7 +33,8 @@ RUN git clone https://github.com/NVIDIA/apex \
 
 RUN mv /fruit_detection_swin/train2.py /swin_detection/tools/train2.py \
     && mv /fruit_detection_swin/minneapple_instance.py /swin_detection/configs/_base_/datasets/ \
-    && mv /fruit_detection_swin/cascade_masK_small.py /swin_detection/configs/swin/cascade_masK_small.py \
+    && mv /fruit_detection_swin/cascade_mask_small.py /swin_detection/configs/swin/cascade_mask_small.py \
+    && mv /fruit_detection_swin/cascade_mask_tiny.py /swin_detection/configs/swin/cascade_mask_tiny.py \
     && mv /fruit_detection_swin/coco.py /swin_detection/mmdet/datasets/coco.py \
     && mv /fruit_detection_swin/cascade_mask_rcnn_swin_fpn.py /swin_detection/configs/_base_/models/cascade_mask_rcnn_swin_fpn.py
 

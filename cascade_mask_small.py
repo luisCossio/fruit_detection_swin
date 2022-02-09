@@ -1,5 +1,3 @@
-#  this is my design, and should be named: htc swin_small_patch4_window7_mstrain_480-800_adamw_dconv_c3-c5_mstrain_400_1400_16x1_20e_coco.py
-#### https://github.com/SwinTransformer/Swin-Transformer-Object-Detection/issues/2
 
 _base_ = [
     '../_base_/models/cascade_mask_rcnn_swin_fpn.py',
@@ -138,7 +136,7 @@ optimizer = dict(_delete_=True, type='AdamW', lr=0.0001, betas=(0.9, 0.999), wei
                  paramwise_cfg=dict(custom_keys={'absolute_pos_embed': dict(decay_mult=0.),
                                                  'relative_position_bias_table': dict(decay_mult=0.),
                                                  'norm': dict(decay_mult=0.)}))
-lr_config = dict(step=[27, 50])
+lr_config = dict(step=[24, 45])
 runner = dict(type='EpochBasedRunnerAmp', max_epochs=90)
 
 # do not use mmdet version fp16

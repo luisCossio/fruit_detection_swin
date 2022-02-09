@@ -119,7 +119,7 @@ optimizer = dict(_delete_=True, type='AdamW', lr=0.0001, betas=(0.9, 0.999), wei
                  paramwise_cfg=dict(custom_keys={'absolute_pos_embed': dict(decay_mult=0.),
                                                  'relative_position_bias_table': dict(decay_mult=0.),
                                                  'norm': dict(decay_mult=0.)}))
-lr_config = dict(step=[27, 50])
+lr_config = dict(step=[24, 45])
 runner = dict(type='EpochBasedRunnerAmp', max_epochs=90)
 
 # do not use mmdet version fp16

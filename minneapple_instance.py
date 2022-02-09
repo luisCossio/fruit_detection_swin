@@ -29,8 +29,8 @@ test_pipeline = [
         ])
 ]
 data = dict(
-    samples_per_gpu=8,
-    workers_per_gpu=8,
+    samples_per_gpu=7,
+    workers_per_gpu=7,
     train=dict(
         type=dataset_type,
         classes=classes,
@@ -49,4 +49,4 @@ data = dict(
         ann_file=data_root + 'annotations/instances_val.json',
         img_prefix=data_root + 'val/images/',
         pipeline=test_pipeline))
-evaluation = dict(metric=['bbox', 'segm'], save_best = 'bbox_mAP')
+evaluation = dict(metric=['bbox', 'segm','loss'], save_best = 'bbox_mAP')
