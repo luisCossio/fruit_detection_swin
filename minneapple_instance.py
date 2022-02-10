@@ -46,7 +46,7 @@ data = dict(
     test=dict(
         type=dataset_type,
         classes=classes,
-        ann_file=data_root + 'annotations/instances_val.json',
-        img_prefix=data_root + 'val/images/',
+        ann_file=data_root + 'annotations/instances_test.json',
+        img_prefix=data_root + 'test/images/',
         pipeline=test_pipeline))
-evaluation = dict(metric=['bbox', 'segm','loss'], save_best = 'bbox_mAP')
+evaluation = dict(metric=['bbox', 'segm'], save_best = 'bbox_mAP')
