@@ -38,4 +38,4 @@ RUN mv /fruit_detection_swin/train2.py /swin_detection/tools/train2.py \
     && mv /fruit_detection_swin/cascade_mask_rcnn_swin_fpn.py /swin_detection/configs/_base_/models/cascade_mask_rcnn_swin_fpn.py
 
 RUN python setup.py develop
-RUN pip uninstall mmpycocotools pycocotools && pip -y install mmpycocotools pycocotools
+RUN pip uninstall mmpycocotools pycocotools && pip install mmpycocotools pycocotools
