@@ -1,4 +1,3 @@
-
 _base_ = [
     '../_base_/models/cascade_mask_rcnn_swin_fpn.py',
     '../_base_/datasets/minneapple_instance.py',
@@ -90,8 +89,7 @@ train_pipeline = [
          policies=[
              [
                  dict(type='Resize',
-                      img_scale=[(1152, 648), (1178, 662), (1203, 677), (1229, 691), (1254, 706),
-                                 (1280, 720)],
+                      img_scale=[(1184, 666),(1216, 684),(1248, 702),(1280, 720)],
                       multiscale_mode='value',
                       keep_ratio=True),
                  dict(type='Translate',
@@ -108,25 +106,10 @@ train_pipeline = [
                       level=2,
                       direction='vertical',
                       img_fill_val=114),]
-             # [
-             #     dict(type='Resize',
-             #          img_scale=[(100, 333),(125, 333),(150, 333)],
-             #          multiscale_mode='value',
-             #          keep_ratio=True),
-             #     dict(type='RandomCrop',
-             #          crop_type='absolute_range',
-             #          crop_size=(384, 600),
-             #          allow_negative_crop=True),
-             #     dict(type='Resize',
-             #          img_scale=[(120, 333),(128, 333),(136, 333),(144, 333),(152, 333),(160, 333),(168, 333),
-             #                     (176, 333),(184, 333),(192, 333),(200, 333)],
-             #          multiscale_mode='value',
-             #          override=True,
-             #          keep_ratio=True)
-             # ]
+
          ]),
     dict(type='Normalize', **img_norm_cfg),
-    dict(type='Pad', size_divisor=32),
+    dict(type='Pad', size_divisor=16),
     dict(type='DefaultFormatBundle'),
     dict(type='Collect', keys=['img', 'gt_bboxes', 'gt_labels', 'gt_masks']),
 ]
@@ -143,7 +126,7 @@ runner = dict(type='EpochBasedRunnerAmp', max_epochs=90)
 fp16 = None
 optimizer_config = dict(
     type="DistOptimizerHook",
-    update_interval=2,
+    update_interval=1,
     grad_clip=None,
     coalesce=True,
     bucket_size_mb=-1,

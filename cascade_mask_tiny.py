@@ -11,7 +11,7 @@ model = dict(
         num_heads=[3, 6, 12, 24],
         window_size=7,
         ape=False,
-        drop_path_rate=0.2,
+        drop_path_rate=0.0,
         patch_norm=True,
         use_checkpoint=False
     ),
@@ -89,8 +89,7 @@ train_pipeline = [
          policies=[
              [
                  dict(type='Resize',
-                      img_scale=[(1152, 648), (1178, 662), (1203, 677), (1229, 691), (1254, 706),
-                                 (1280, 720)],
+                      img_scale=[(1184, 666),(1216, 684),(1248, 702),(1280, 720)],
                       multiscale_mode='value',
                       keep_ratio=True),
                  dict(type='Translate',
@@ -109,7 +108,7 @@ train_pipeline = [
                       img_fill_val=114), ]
          ]),
     dict(type='Normalize', **img_norm_cfg),
-    dict(type='Pad', size_divisor=32),
+    dict(type='Pad', size_divisor=16),
     dict(type='DefaultFormatBundle'),
     dict(type='Collect', keys=['img', 'gt_bboxes', 'gt_labels', 'gt_masks']),
 ]
@@ -126,7 +125,7 @@ runner = dict(type='EpochBasedRunnerAmp', max_epochs=90)
 fp16 = None
 optimizer_config = dict(
     type="DistOptimizerHook",
-    update_interval=2,
+    update_interval=1,
     grad_clip=None,
     coalesce=True,
     bucket_size_mb=-1,
