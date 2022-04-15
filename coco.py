@@ -551,4 +551,4 @@ class CocoDataset(CustomDataset):
 
 @DATASETS.register_module
 class MinneAppleDataset(CocoDataset):
-    CLASSES = ('apple')
+    CLASSES = ('apple',)

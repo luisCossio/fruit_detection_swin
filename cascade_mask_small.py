@@ -89,7 +89,7 @@ train_pipeline = [
          policies=[
              [
                  dict(type='Resize',
-                      img_scale=[(1184, 666),(1216, 684),(1248, 702),(1280, 720)],
+                      img_scale=[(1280, 720)],
                       multiscale_mode='value',
                       keep_ratio=True),
                  dict(type='Translate',
@@ -109,25 +109,27 @@ train_pipeline = [
 
          ]),
     dict(type='Normalize', **img_norm_cfg),
-    dict(type='Pad', size_divisor=16),
+    dict(type='Pad', size_divisor=8),
     dict(type='DefaultFormatBundle'),
     dict(type='Collect', keys=['img', 'gt_bboxes', 'gt_labels', 'gt_masks']),
 ]
 data = dict(train=dict(pipeline=train_pipeline))
 
-optimizer = dict(_delete_=True, type='AdamW', lr=0.0001, betas=(0.9, 0.999), weight_decay=0.05,
+optimizer = dict(_delete_=True, type='Adam', lr=0.0003, weight_decay=0.0001,
                  paramwise_cfg=dict(custom_keys={'absolute_pos_embed': dict(decay_mult=0.),
                                                  'relative_position_bias_table': dict(decay_mult=0.),
                                                  'norm': dict(decay_mult=0.)}))
-lr_config = dict(step=[24, 45])
-runner = dict(type='EpochBasedRunnerAmp', max_epochs=90)
+lr_config = dict(step=[24, 45, 75])
+runner = dict(type='EpochBasedRunnerAmp', max_epochs=100)
 
 # do not use mmdet version fp16
 fp16 = None
 optimizer_config = dict(
     type="DistOptimizerHook",
     update_interval=1,
-    grad_clip=None,
+    # grad_clip=None,
+    _delete_=True,
+    grad_clip=dict(max_norm=6, norm_type=2),
     coalesce=True,
     bucket_size_mb=-1,
     use_fp16=True,
