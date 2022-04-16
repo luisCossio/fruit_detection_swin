@@ -38,40 +38,54 @@ train_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(type='LoadAnnotations', with_bbox=True, with_mask=True),
     dict(type='RandomFlip', flip_ratio=0.5),
+    dict(type='Resize',img_scale=[(1280,720)], # (640, 360) , (320, 180), (1280,720)
+    multiscale_mode='value', keep_ratio=True),
     dict(
         type='AutoAugment',
-        policies=[[
-            dict(
-                type='Resize',
-                img_scale=[(480, 1333), (512, 1333), (544, 1333), (576, 1333),
-                           (608, 1333), (640, 1333), (672, 1333), (704, 1333),
-                           (736, 1333), (768, 1333), (800, 1333)],
-                multiscale_mode='value',
-                keep_ratio=True)
-        ],
-                  [
-                      dict(
-                          type='Resize',
-                          img_scale=[(400, 1333), (500, 1333), (600, 1333)],
-                          multiscale_mode='value',
-                          keep_ratio=True),
-                      dict(
-                          type='RandomCrop',
-                          crop_type='absolute_range',
-                          crop_size=(384, 600),
-                          allow_negative_crop=True),
-                      dict(
-                          type='Resize',
-                          img_scale=[(480, 1333), (512, 1333), (544, 1333),
-                                     (576, 1333), (608, 1333), (640, 1333),
-                                     (672, 1333), (704, 1333), (736, 1333),
-                                     (768, 1333), (800, 1333)],
-                          multiscale_mode='value',
-                          override=True,
-                          keep_ratio=True)
-                  ]]),
+        policies=[
+            [
+                dict(type='Rotate',
+                     level=2,
+                     img_fill_val=114),
+                dict(type='Translate',
+                     level=2,
+                     direction='horizontal',
+                     img_fill_val=114),
+                dict(type='Translate',
+                     level=2,
+                     direction='vertical',
+                     img_fill_val=114),
+            ],
+            [
+                dict(type='Rotate',
+                     level=2,
+                     img_fill_val=114)
+            ],
+            [
+                dict(type='Translate',
+                     level=2,
+                     direction='vertical',
+                     img_fill_val=114)
+            ],
+            [
+                dict(type='Translate',
+                     level=2,
+                     direction='horizontal',
+                     img_fill_val=114)
+            ],
+            [
+                dict(type='Translate',
+                     level=2,
+                     direction='vertical',
+                     img_fill_val=114),
+                dict(type='Translate',
+                     level=2,
+                     direction='horizontal',
+                     img_fill_val=114),
+            ]
+        ]),
     dict(type='Normalize', **img_norm_cfg),
-    dict(type='Pad', size_divisor=32),
+    dict(type='Pad', size_divisor=8),
     dict(type='DefaultFormatBundle'),
     dict(type='Collect', keys=['img', 'gt_bboxes', 'gt_labels', 'gt_masks']),
 ]
@@ -89,6 +103,6 @@ optimizer = dict(
             'relative_position_bias_table': dict(decay_mult=0.),
             'norm': dict(decay_mult=0.)
         }))
-lr_config = dict(warmup_iters=1000, step=[27, 33])
-runner = dict(max_epochs=36)
+lr_config = dict(warmup_iters=1000, step=[24, 42, 75])
+runner = dict(type='EpochBasedRunner', max_epochs=90)
 

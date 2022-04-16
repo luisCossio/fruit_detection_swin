@@ -6,10 +6,10 @@ img_norm_cfg = dict(
 train_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(type='LoadAnnotations', with_bbox=True, with_mask=True),
-    dict(type='Resize', img_scale=(1280, 720), keep_ratio=True),
+    dict(type='Resize', img_scale=(1280,720), keep_ratio=True),  # (1280,720), (640, 360), (320, 180)
     dict(type='RandomFlip', flip_ratio=0.5),
     dict(type='Normalize', **img_norm_cfg),
-    dict(type='Pad', size_divisor=8),
+    dict(type='Pad', size_divisor=8,pad_val=114),
     dict(type='DefaultFormatBundle'),
     dict(type='Collect', keys=['img', 'gt_bboxes', 'gt_labels', 'gt_masks']),
 ]
@@ -17,20 +17,20 @@ test_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(
         type='MultiScaleFlipAug',
-        img_scale=(1280, 720),
+        img_scale=(1280,720),
         flip=False,
         transforms=[
             dict(type='Resize', keep_ratio=True),
             # dict(type='RandomFlip'),
             dict(type='Normalize', **img_norm_cfg),
-            dict(type='Pad', size_divisor=8),
+            dict(type='Pad', size_divisor=8,pad_val=114),
             dict(type='ImageToTensor', keys=['img']),
             dict(type='Collect', keys=['img']),
         ])
 ]
 data = dict(
-    samples_per_gpu=7,
-    workers_per_gpu=7,
+    samples_per_gpu=8,
+    workers_per_gpu=8,
     train=dict(
         type=dataset_type,
         classes=classes,
